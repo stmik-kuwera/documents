@@ -56,16 +56,6 @@ typst compile src/templates/formulir-pendaftaran-magang/example.typ --root . -o 
 )
 ```
 
-Alias `daftar-hadir` still works.
-
-| Param | Type | Default | Notes |
-|-------|------|---------|-------|
-| `nama`/`nim` | `str`/`none` | `none` | Blank → dotted |
-| `pejabat` | `array(dict(nama,jabatan,hp))` | `()` | Up to 3 |
-| `entries` | `array(dict(hari_tanggal,datang,pulang,kegiatan,paraf))` | `none` | `paraf` optional |
-| `rows` | `int` | `19` | Min rows, padded |
-| `logo` | `str` | `"../../../assets/..."` | From template |
-
 ## Formulir Pendaftaran Magang
 
 ```typ
