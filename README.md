@@ -1,13 +1,22 @@
-# STMIK Kuwera — Daftar Hadir Magang (Typst)
+# STMIK Kuwera — Documents (Typst)
 
-Typst template for **DAFTAR HADIR & KEGIATAN MAHASISWA DI TEMPAT MAGANG** — matches the original STMIK Kuwera form with full-width header, dotted fields, and 19-row table.
+Modular Typst templates. Current: **DAFTAR HADIR & KEGIATAN MAHASISWA DI TEMPAT MAGANG** — easy to add more.
 
-## Files
+## Structure
 
-- `lib.typ` — reusable function `daftar-hadir(...)`
-- `daftar-hadir-magang.typ` — blank wrapper (19 rows, ready to print)
-- `example-filled.typ` — filled example
-- `assets/stmik_kuwera_logo.png` — logo
+```
+assets/stmik_kuwera_logo.png
+src/
+  shared/field.typ        # dotted/filled/field helpers
+  shared/header.typ       # stmik-header(logo)
+  shared/table.typ        # header-cell/body-cell
+  templates/daftar-hadir-magang/
+    lib.typ               # daftar-hadir-magang(...)
+    example.typ
+lib.typ                   # facade re-exporting all templates
+daftar-hadir-magang.typ   # blank wrapper (backward compat)
+example-filled.typ        # filled demo (root)
+```
 
 ## Requirements
 
@@ -18,18 +27,20 @@ Typst template for **DAFTAR HADIR & KEGIATAN MAHASISWA DI TEMPAT MAGANG** — ma
 ```bash
 typst compile daftar-hadir-magang.typ
 typst watch daftar-hadir-magang.typ
+# or modular
+typst compile src/templates/daftar-hadir-magang/example.typ --root .
 ```
 
 ## Reusable Template
 
 ```typ
-#import "lib.typ": daftar-hadir
+#import "lib.typ": daftar-hadir-magang
 
 // blank
-#daftar-hadir()
+#daftar-hadir-magang()
 
 // filled
-#daftar-hadir(
+#daftar-hadir-magang(
   nama: "Budi Santoso",
   nim: "20240001",
   pejabat: (
@@ -37,11 +48,13 @@ typst watch daftar-hadir-magang.typ
     (nama: "Joko Widodo", jabatan: "Supervisor", hp: "0813-9876-5432"),
   ),
   entries: (
-    (hari_tanggal: "Senin, 03 Feb 2026", datang: "08:00", pulang: "16:00", kegiatan: "Orientasi", paraf: ""),
+    (hari_tanggal: "Senin, 03 Feb 2026", datang: "08:00", pulang: "16:00", kegiatan: "Orientasi"),
   ),
-  rows: 19, // minimum rows, padded with blanks if entries < rows
+  rows: 19,
 )
 ```
+
+Alias `daftar-hadir` still works: `#import "lib.typ": daftar-hadir` → same function.
 
 ### Parameters
 
@@ -49,35 +62,46 @@ typst watch daftar-hadir-magang.typ
 |-------|------|---------|-------|
 | `nama` | `str`/`none` | `none` | Blank → dotted |
 | `nim` | `str`/`none` | `none` | Blank → dotted |
-| `pejabat` | `array` of `dict(nama,jabatan,hp)` | `()` | Up to 3, missing → dotted |
-| `entries` | `array` of `dict(hari_tanggal,datang,pulang,kegiatan,paraf)` | `none` | Blank table if `none` |
+| `pejabat` | `array` of `dict(nama,jabatan,hp)` | `()` | Up to 3 |
+| `entries` | `array` of `dict(hari_tanggal,datang,pulang,kegiatan,paraf)` | `none` | `paraf` optional → blank for manual signature |
 | `rows` | `int` | `19` | Min rows, padded |
-| `logo` | `str` | `"assets/stmik_kuwera_logo.png"` | Path relative to `lib.typ` |
+| `logo` | `str` | `"../../../assets/..."` (from template) | Override path |
+
+## Adding a New Template
+
+```bash
+mkdir -p src/templates/daftar-hadir-seminar
+# copy lib.typ skeleton, implement new function daftar-hadir-seminar(...)
+# add to lib.typ:
+# import "src/templates/daftar-hadir-seminar/lib.typ": daftar-hadir-seminar
+```
+
+All templates reuse `src/shared/*` so header/logo style stays consistent.
 
 ## Git Submodule (reuse in another repo)
 
 ```bash
-git submodule add https://github.com/kagchi/documents.git documents
+git submodule add https://github.com/<you>/documents.git documents
 git submodule update --init
 ```
 
-`main.typ` in your project:
+`main.typ`:
 
 ```typ
-#import "documents/lib.typ": daftar-hadir
-#daftar-hadir(nama: "Ahmad", nim: "123")
+#import "documents/lib.typ": daftar-hadir-magang
+#daftar-hadir-magang(nama: "Ahmad", nim: "123")
+
+// or direct
+#import "documents/src/templates/daftar-hadir-magang/lib.typ": daftar-hadir-magang
 ```
 
 ```bash
 typst compile main.typ
+typst compile documents/src/templates/daftar-hadir-magang/example.typ --root documents
 ```
 
-Pin to a tag/commit: `cd documents && git checkout v0.1.0 && cd .. && git add documents`.
-
-Update: `git submodule update --remote documents`.
-
-> Assets stay inside the submodule (`documents/assets/...`) so the logo resolves automatically.
+Pin: `cd documents && git checkout v0.1.0 && cd .. && git add documents`.
 
 ## Online import?
 
-Direct `#import "https://..."` is **not** supported in Typst (sandboxed). Use git submodule or upload the folder to typst.app. For a true one-liner, publish to Typst Packages (`@preview`) via `typst.toml` — not included yet but ready to add.
+`#import "https://..."` not supported. Use submodule or upload to typst.app. Publish to `@preview` via `typst.toml` for one-liner (not yet).
