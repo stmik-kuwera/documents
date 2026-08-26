@@ -57,6 +57,18 @@
     }
   }
 
+  let telp-cell(entry) = {
+    if entry == none { [] } else {
+      let kt = entry.at("ketua-telp", default: entry.at("ketua-hp", default: entry.at("hp", default: none)))
+      let at = entry.at("anggota-telp", default: entry.at("anggota-hp", default: ()))
+      let t = if kt != none { kt } else { "" }
+      if at.len() > 0 {
+        t += "\n\n" + at.join("\n")
+      }
+      text(size: 7pt, t)
+    }
+  }
+
   table(
     columns: (0.6cm, 2.6cm, 2cm, 2cm, 1fr, 1.7cm, 1.35cm, 1.4cm),
     stroke: 0.7pt,
@@ -77,7 +89,7 @@
         body-cell[#(i + 1)],
         table.cell(align: left + top, inset: 4pt, nama-kelompok-cell(e)),
         table.cell(align: left + top, inset: 4pt, nim-cell(e)),
-        body-cell[#if e != none { e.at("hp", default: []) } else { [] }],
+        table.cell(align: left + top, inset: 4pt, telp-cell(e)),
         body-cell[#if e != none { e.at("judul", default: []) } else { [] }],
         body-cell[#if e != none { e.at("tgl-pengajuan", default: []) } else { [] }],
         body-cell[#if e != none { e.at("tgl-lulus", default: []) } else { [] }],
