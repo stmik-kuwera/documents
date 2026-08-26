@@ -4,6 +4,8 @@ Modular Typst templates.
 
 - `daftar-hadir-magang` — DAFTAR HADIR & KEGIATAN MAHASISWA DI TEMPAT MAGANG
 - `formulir-pendaftaran-magang` — FORMULIR PENDAFTARAN MAGANG
+- `formulir-pengajuan-dosen` — FORMULIR PENGAJUAN DOSEN PEMBIMBING MAGANG
+- `kartu-bimbingan-magang` — KARTU BIMBINGAN MAGANG
 
 ## Structure
 
