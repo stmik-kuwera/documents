@@ -1,4 +1,4 @@
-#let stmik-header(logo-img) = {
+#let stmik-header-base(logo-img) = {
   box(width: 100%, height: 2.4cm)[
     #place(left + horizon, dx: 0pt, dy: 0pt, logo-img)
     #block(width: 100%, height: 100%)[
@@ -22,6 +22,10 @@
   v(4pt)
   line(length: 100%, stroke: 0.7pt)
   v(6pt)
+}
+
+#let stmik-header(logo-img) = {
+  stmik-header-base(logo-img)
   block(width: 100%, align(center, text(size: 13pt, weight: 800)[DAFTAR HADIR & KEGIATAN MAHASISWA DI TEMPAT MAGANG]))
   v(12pt)
 }
