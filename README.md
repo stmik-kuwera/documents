@@ -6,6 +6,7 @@ Modular Typst templates.
 - `formulir-pendaftaran-magang` — FORMULIR PENDAFTARAN MAGANG
 - `formulir-pengajuan-dosen` — FORMULIR PENGAJUAN DOSEN PEMBIMBING MAGANG
 - `kartu-bimbingan-magang` — KARTU BIMBINGAN MAGANG
+- `penilaian-prestasi-magang` — PENILAIAN PRESTASI MAGANG
 
 ## Structure
 
@@ -27,6 +28,12 @@ src/
     template.pdf
     example.typ
     example.pdf
+  templates/penilaian-prestasi-magang/
+    lib.typ               # penilaian-prestasi-magang(...)
+    template.typ
+    template.pdf
+    example.typ
+    example.pdf
 lib.typ                   # facade re-exporting all templates
 ```
 
@@ -37,10 +44,12 @@ lib.typ                   # facade re-exporting all templates
 ## Quick Start
 
 ```bash
-typst compile src/templates/daftar-hadir-magang/template.typ --root . -o src/templates/daftar-hadir-magang/template.pdf
-typst compile src/templates/daftar-hadir-magang/example.typ --root . -o src/templates/daftar-hadir-magang/example.pdf
-typst compile src/templates/formulir-pendaftaran-magang/template.typ --root . -o src/templates/formulir-pendaftaran-magang/template.pdf
-typst compile src/templates/formulir-pendaftaran-magang/example.typ --root . -o src/templates/formulir-pendaftaran-magang/example.pdf
+typst compile src/templates/daftar-hadir-magang/template.typ --root . src/templates/daftar-hadir-magang/template.pdf
+typst compile src/templates/daftar-hadir-magang/example.typ --root . src/templates/daftar-hadir-magang/example.pdf
+typst compile src/templates/formulir-pendaftaran-magang/template.typ --root . src/templates/formulir-pendaftaran-magang/template.pdf
+typst compile src/templates/formulir-pendaftaran-magang/example.typ --root . src/templates/formulir-pendaftaran-magang/example.pdf
+typst compile src/templates/penilaian-prestasi-magang/template.typ --root . src/templates/penilaian-prestasi-magang/template.pdf
+typst compile src/templates/penilaian-prestasi-magang/example.typ --root . src/templates/penilaian-prestasi-magang/example.pdf
 ```
 
 ## Daftar Hadir Magang
@@ -87,6 +96,31 @@ typst compile src/templates/formulir-pendaftaran-magang/example.typ --root . -o 
 | `ketua-nama`/`ketua-hp` | `str`/`none` | from anggota[0] | Keterangan |
 | `tanggal-surat`/`nim-ketua` | `str`/`none` | `none` | Signature |
 | `rows` | `int` | `5` | Min table rows |
+
+## Penilaian Prestasi Magang
+
+```typ
+#import "lib.typ": penilaian-prestasi-magang
+
+#penilaian-prestasi-magang()
+#penilaian-prestasi-magang(
+  nama: "Budi Santoso",
+  nim: "20240001",
+  nama-tempat: "PT Maju Jaya, Jakarta",
+  jangka-waktu: "03 Feb — 30 Apr 2026",
+  deskripsi: "Membantu pengembangan sistem informasi inventaris...",
+  keterangan-lainnya: "Disiplin dan komunikatif.",
+)
+```
+
+| Param | Type | Default | Notes |
+|-------|------|---------|-------|
+| `nama` | `str`/`none` | `none` | Nama mahasiswa |
+| `nim` | `str`/`none` | `none` | NIM |
+| `nama-tempat`/`tempat` | `str`/`none` | `none` | Nama Tempat Magang |
+| `jangka-waktu`/`jangka` | `str`/`none` | `none` | Jangka Waktu Magang |
+| `deskripsi`/`tugas` | `str`/`none` | `none` | Deskripsi Tugas Selama Magang |
+| `keterangan-lainnya`/`keterangan` | `str`/`none` | `none` | Keterangan Lainnya |
 
 ## Adding a New Template
 
