@@ -21,7 +21,7 @@
   stmik-header(image(logo, width: 2.1cm))
 
   grid(
-    columns: (6.2cm, 0.95cm, 1fr, 1.2cm, 1fr, 3.2cm),
+    columns: (4.9cm, 0.95cm, 1.35fr, 1.2cm, 1.35fr, 3.2cm),
     gutter: 2pt,
     row-gutter: 3.5pt,
     align(left + horizon, text(size: 7.5pt)[Nama]),
