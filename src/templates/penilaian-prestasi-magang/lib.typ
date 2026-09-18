@@ -11,6 +11,7 @@
   tugas: none,
   keterangan: none,
   keterangan-lainnya: none,
+  penandatangan: "Nama / Jabatan / Cap Instansi",
   logo: "../../../assets/stmik_kuwera_logo.png",
 ) = {
   set page(paper: "a4", margin: (x: 1.5cm, top: 1cm, bottom: 1.2cm))
@@ -73,7 +74,7 @@
     #v(42pt)
     #align(center, box(width: 5cm, stroke: (bottom: (dash: "dotted", thickness: 0.6pt)), height: 1em))
     #v(2pt)
-    #align(center, text(size: 7pt)[Nama / Jabatan / Cap Instansi])
+    #align(center, text(size: 7pt)[#penandatangan])
   ]))
 }
 
